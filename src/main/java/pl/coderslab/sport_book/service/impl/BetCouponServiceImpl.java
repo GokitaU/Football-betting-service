@@ -6,6 +6,9 @@ import pl.coderslab.sport_book.model.betting.BetCoupon;
 import pl.coderslab.sport_book.repository.BetCouponRepository;
 import pl.coderslab.sport_book.service.BetCouponService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class BetCouponServiceImpl implements BetCouponService {
     @Autowired
@@ -14,5 +17,19 @@ public class BetCouponServiceImpl implements BetCouponService {
     @Override
     public BetCoupon save(BetCoupon coupon) {
         return betCouponRepository.save(coupon);
+    }
+
+    @Override
+    public List<BetCoupon> findAllByUser(String userName) {
+
+        List<BetCoupon> coupons=new ArrayList<>();
+
+        try {
+            coupons= betCouponRepository.findAllByUser(userName);
+        } catch (Exception e) {
+
+        }
+
+        return  coupons;
     }
 }

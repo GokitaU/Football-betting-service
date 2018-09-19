@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>User account details</h1>
+<p sec:authorize="isAuthenticated()">
+<p>Logged as <span sec:authentication="name"/></p>
+</p>
+
+<ul>
+    <li th:text="|Currently in you wallet is: ${wallet.balance} PLN|"/>
+    <li th:text="|Your wallet is linked to bank account: ${wallet.bankAccount}|"/>
+</ul>
+
+
+<table>
+    <tr>
+        <td>
+
+            <form th:action="@{/chargeaccount}" th:object="${wallet}" method="get">
+                <input type="submit" value="Charge account"/>
+            </form>
+        </td>
+
+        <td>
+            <form th:action="@{/withdraw}" th:object="${wallet}" method="get">
+                <input type="submit" value="Withdraw money"/>
+            </form>
+        </td>
+    </tr>
+
+</table>
+
+<h3>Operations history:</h3>
+<p>TODO:</p>
+<p> add a class operation (type: withdraw/recharge) with relation to wallet </p>
+
+
+
+</body>
+</html>

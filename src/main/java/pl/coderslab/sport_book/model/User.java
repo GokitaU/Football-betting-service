@@ -40,7 +40,7 @@ public class User {
     @OneToOne (cascade = CascadeType.ALL)
     private Wallet wallet;
 
-    @OneToMany
+    @OneToMany (mappedBy = "user")
     private List<BetCoupon> coupons = new ArrayList<>();
 
     private boolean enabled=false;

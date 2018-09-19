@@ -1,16 +1,15 @@
 package pl.coderslab.sport_book.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.sport_book.model.betting.BetCoupon;
 import pl.coderslab.sport_book.model.betting.Fixture;
 import pl.coderslab.sport_book.model.betting.SingleBet;
+import pl.coderslab.sport_book.service.BetCouponService;
 import pl.coderslab.sport_book.service.FixtureService;
 import pl.coderslab.sport_book.service.SingleBetService;
 
@@ -33,6 +32,9 @@ public class Bet2Controller {
     @Autowired
     FixtureService fixtureService;
 
+    @Autowired
+    BetCouponService couponService;
+
     @PostMapping ("/newbet")
     public String addBetToCoupon(@RequestParam Integer event,
                          @RequestParam BigDecimal betPrice,
@@ -45,11 +47,12 @@ public class Bet2Controller {
         List<SingleBet> betsInSession= (List<SingleBet>) session.getAttribute("sessionBets");
 
         if (bet.checkIfUniqe(betsInSession)==false){
-            return "redirect:/fixtures";
+            return "redirect:/home";
         }
 
         betsInSession.add(bet);
-        return "coupon";
+        return "redirect:/home";
+
     }
 
     @PostMapping ("/delbet")
@@ -59,7 +62,14 @@ public class Bet2Controller {
         removeBetFromSession(event, sessionBets);
 
         return "coupon";
+    }
 
+    @RequestMapping ("/mybets")
+    public String myBets(Model model, Authentication authentication){
+        String userName=authentication.getName();
+        List<BetCoupon> coupons=couponService.findAllByUser(userName);
+        model.addAttribute("coupons", coupons);
+        return "mybets";
     }
 
 

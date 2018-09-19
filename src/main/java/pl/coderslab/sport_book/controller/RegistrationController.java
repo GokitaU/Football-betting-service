@@ -51,7 +51,7 @@ public class RegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String saveNewUser(@Valid UserDTO userDTO, BindingResult result){
 
-        if (!result.hasErrors() && findIfUserCredentialsAreBusy(userDTO)==false){
+        if (!result.hasErrors() && findIfUserCredentialsAreFree(userDTO)==true){
             saveUser(userDTO);
             return "mock";
         }
@@ -68,7 +68,7 @@ public class RegistrationController {
         userService.saveUser(user);
     }
 
-    private boolean findIfUserCredentialsAreBusy(@Valid UserDTO userDTO) {
+    private boolean findIfUserCredentialsAreFree(@Valid UserDTO userDTO) {
         String userName=userDTO.getUser().getUsername();
         String email=userDTO.getUser().getMail();
         boolean dataBaseVerification=userDetailsService.findEmailAndUsername(userName,email);

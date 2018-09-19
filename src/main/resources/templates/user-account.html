@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<h1>User account details</h1>
+
+<table>
+    <tr>
+        <td>
+            <p sec:authorize="isAuthenticated()">
+            <p>Logged as <span sec:authentication="name"/> </p>
+            <!--<p>User role: <span sec:authentication="authorities"></span></p>-->
+            </p>
+        </td>
+        <td>
+            <p sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Logout"/>
+            </form>
+            </p>
+        </td>
+
+        <td>
+            <a th:href="@{/home}">Home</a>
+        </td>
+    </tr>
+</table>
+
+
+<table>
+    <tr>
+        <td>
+            <!--<form th:action="@{/register}" th:object="${userDTO}" method="post"></br>-->
+
+
+
+                <table>
+                    <tr>
+                        <td> First Name:</td>
+                        <td><p th:text="${user.firstName}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td> Last Name:</td>
+                        <td><p th:text="${user.lastName}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td> Username</td>
+                        <td><p th:text="${user.username}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td> e-mail</td>
+                        <td><p th:text=="email" th:text="${user.mail}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td> Street </td>
+                        <td><p th:text=="text" th:text="${user.street}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td> City</td>
+                        <td><p th:text="${user.city}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td> Zip code </td>
+                        <td><p th:text="${user.zip}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td> County </td>
+                        <td><p th:text="${user.country.countryName}"></td>
+                    </tr>
+
+
+                    <!--<tr>-->
+                        <!--<td> Bank Account</td>-->
+                        <!--<td><input type="text" th:field="*{wallet.bankAccount}"></td>-->
+                    <!--</tr>-->
+
+
+
+                </table>
+            <!--</form>-->
+        </td>
+    </tr>
+
+
+</table>
+
+
+</body>
+</html>

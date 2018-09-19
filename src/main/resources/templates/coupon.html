@@ -4,6 +4,8 @@
 
 <div th:fragment="coupon">
 
+    <a th:href="@{/coupon}">Coupon Details</a>
+
     <div th:if="${sessionBets.isEmpty()}"> No bets are placed so far</div>
 
     <div th:if="${!sessionBets.isEmpty()}">
