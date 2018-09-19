@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+
+
+
+<div th:fragment="bets">
+<table>
+    <thead>
+        <tr>
+
+            <th>Date </th>
+            <th>Home Team </th>
+            <th>Draw </th>
+            <th>Away Team </th>
+            <th>Total goals </th>
+            <th>Total goals </th>
+
+        </tr>
+    </thead>
+
+    <!--/*@thymesVar id="active" type="pl.coderslab.sport_book.model.betting.Fixture"*/-->
+    <tr th:each="event: ${active}">
+
+        <td th:text="${event.Date}"> </td>
+
+
+        <!--/*@thymesVar id="bet" type="pl.coderslab.sport_book.model.betting.SingleBet"*/-->
+        <!--/*@thymesVar id="bet" type="pl.coderslab.sport_book.model.betting.SingleBet"*/-->
+        <form th:action="@{/newbet}" th:object="${singlBet}" method="post">
+
+            <td>
+                <input type="hidden" name="event" th:value="${event.id}"/>
+                <input type="hidden" name="betPrice" th:value="${event.betHome}"/>
+                <input type="hidden" name="placedBet" th:value="H"/>
+                <input type="submit" th:value="|${event.homeTeam.name} ${event.betHome}|"/>
+
+                <ul th:if="${#fields.hasErrors('*')}">
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+                </ul>
+
+            </td>
+        </form>
+
+
+        <form th:action="@{/newbet}" th:object="${bet}" method="post">
+            <td>
+                <input type="hidden" name="event" th:value="${event.id}"/>
+                <input type="hidden" name="betPrice" th:value="${event.betDraw}"/>
+                <input type="hidden" name="placedBet" th:value="D"/>
+                <input type="submit" th:value="|X     ${event.betDraw}|"/>
+            </td>
+        </form>
+
+        <form th:action="@{/newbet}" th:object="${bet}" method="post">
+            <td>
+                <input type="hidden" name="event" th:value="${event.id}"/>
+                <input type="hidden" name="betPrice" th:value="${event.betAway}"/>
+                <input type="hidden" name="placedBet" th:value="A"/>
+                <input type="submit" th:value="|${event.awayTeam.name}     ${event.betAway}|"/>
+            </td>
+        </form>
+
+        <form th:action="@{/newbet}" th:object="${bet}" method="post">
+            <td>
+                <input type="hidden" name="event" th:value="${event.id}"/>
+                <input type="hidden" name="betPrice" th:value="${event.goalsLessThan25}"/>
+                <input type="hidden" name="placedBet" th:value="LT2_5"/>
+                <input type="submit" th:value="|Goals<2.5      ${event.GoalsLessThan25}|" />
+            </td>
+        </form>
+
+        <form th:action="@{/newbet}" th:object="${bet}" method="post">
+            <td>
+                <input type="hidden" name="event" th:value="${event.id}"/>
+                <input type="hidden" name="betPrice" th:value="${event.goalsMoreThan25}"/>
+                <input type="hidden" name="placedBet" th:value="GT2_5"/>
+                <input type="submit" th:value="|Goals>2.5      ${event.goalsMoreThan25}|"/>
+            </td>
+        </form>
+    </tr>
+
+</table>
+</div>
+
+
+
+</body>
+</html>

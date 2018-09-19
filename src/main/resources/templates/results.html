@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table>
+    <tr th:each="game: ${finishedGames}">
+        <td th:text="${game.category.categoryName}"> </td>
+        <td th:text="${game.league.name}"> </td>
+        <td th:text="|Matchday: ${game.matchday}|"> </td>
+        <td th:text="${game.Date}"> </td>
+
+        <td th:text="|${game.homeTeam.name} vs ${game.awayTeam.name} |" >></td>
+        <td th:text="|${game.FTHG} : ${game.FTAG}|"></td>
+        <td th:if="${game.FTR.startsWith('H')}" th:text="'Winning combination: 1, 1X, 12'"></td>
+        <td th:if="${game.FTR.startsWith('D')}" th:text="'Winning combination: 1X, X, X2'"></td>
+        <td th:if="${game.FTR.startsWith('A')}" th:text="'Winning combination: 2, X2, 12'"></td>
+    </tr>
+
+    <tr>
+
+    </tr>
+
+</table>
+
+
+
+</body>
+</html>
