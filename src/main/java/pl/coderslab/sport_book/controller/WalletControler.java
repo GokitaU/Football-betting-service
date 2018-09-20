@@ -8,17 +8,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.sport_book.model.User;
 import pl.coderslab.sport_book.model.Wallet;
+import pl.coderslab.sport_book.model.betting.BetCoupon;
 import pl.coderslab.sport_book.model.betting.SingleBet;
+import pl.coderslab.sport_book.service.BetCouponService;
 import pl.coderslab.sport_book.service.UserService;
 import pl.coderslab.sport_book.service.WalletService;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@SessionAttributes("wallet")
+@SessionAttributes ({"wallet","sessionBets"})
 public class WalletControler {
 
     @Autowired
@@ -26,6 +29,9 @@ public class WalletControler {
 
     @Autowired
     WalletService walletService;
+
+    @Autowired
+    BetCouponService couponService;
 
     @ModelAttribute("wallet")
     public Wallet walletInSession(Authentication authentication){
@@ -54,4 +60,47 @@ public class WalletControler {
         walletService.saveWallet(wallet);
         return "redirect:/wallet";
     }
+
+    @RequestMapping (value = "/payfromaccount", method = RequestMethod.POST)
+    public String payTheCoupon(@ModelAttribute ("wallet") Wallet wallet,
+                               @ModelAttribute("sessionBets") List<SingleBet> sessionBets,
+                               @RequestParam BigDecimal charge,
+                               Authentication authentication,
+                               HttpSession session){
+
+      if( wallet.getBalance().compareTo(charge) < 0){
+          return "moneyalert";
+      }
+      else {
+          wallet.setBalance(wallet.getBalance().subtract(charge));
+          saveCoupon(sessionBets, charge, authentication, session);
+          return "mock";
+      }
+
+    }
+
+    private void saveCoupon(@ModelAttribute("sessionBets") List<SingleBet> sessionBets, @RequestParam BigDecimal charge, Authentication authentication, HttpSession session) {
+        User current=userService.getByUsername(authentication.getName());
+        BetCoupon coupon = new BetCoupon();
+        coupon.setBetValue(charge);
+
+        coupon.setUser(current);
+        coupon.setBets(sessionBets);
+        coupon.setWinValue(calculateWinValue(sessionBets, charge));
+        couponService.save(coupon);
+        session.removeAttribute("sessionBets");
+    }
+
+
+    private static BigDecimal calculateWinValue(List<SingleBet> bets, BigDecimal charge){
+
+        BigDecimal win=charge;
+
+        for(SingleBet bet:bets){
+            win=win.multiply(bet.getBetPrice());
+        }
+
+        return win;
+    }
+
 }

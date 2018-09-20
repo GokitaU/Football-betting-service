@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<h1>User account details</h1>
+<h1>Betting history </h1>
 
 
 <div th:fragment="mybets">
@@ -17,12 +17,11 @@
             <thead>
             <tr>
 
-                <th>Date</th>
-                <th>Home Team</th>
-                <th>Draw</th>
-                <th>Away Team</th>
-                <th>Total goals</th>
-                <th>Total goals</th>
+                <th>Id</th>
+                <th>Created</th>
+                <th>Bet Value</th>
+                <th>Expected Win</th>
+                <th>Status</th>
 
             </tr>
             </thead>
@@ -36,8 +35,24 @@
                     <td th:text="${item.dateCreated}"></td>
                     <td th:text="${item.betValue}"></td>
                     <td th:text="${item.winValue}"></td>
-                    <td th:text="${item.winValue}"></td>
-                    <td th:text="${item.isWon}"></td>
+                    <td th:if="${item.isWon}==false"> Active </td>
+                    <td th:if="${item.isWon}==true"> Completed </td>
+
+                    <td>
+                        <form th:action="@{/coupondetails}" th:object="${item}" method="post">
+                            <input type="hidden" name="id" value="${item.id}"/>
+                            <input type="submit" value="Details">
+
+                        </form>
+
+                    </td>
+
+                    <td>
+                        <form th:action="@{/coupondetails}" th:object="${item}" method="post">
+                            <input type="hidden" name="ID" th:value="${item.id}"/>
+                            <input type="submit" th:value="Details"/>
+                        </form>
+                    </td>
 
                 </form>
 

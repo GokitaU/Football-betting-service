@@ -16,7 +16,7 @@ public class BetCoupon {
     private Integer id;
 
     @NotNull
-    @OneToMany (mappedBy = "coupon")
+    @OneToMany (mappedBy = "coupon", cascade = CascadeType.PERSIST)
     private List<SingleBet> bets;
 
     public void addBet(SingleBet bet){
@@ -28,20 +28,24 @@ public class BetCoupon {
 
     private BigDecimal winValue;
 
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     private User user;
 
-    private boolean isWon;
+    private boolean isWon=false;
+
+    private boolean isActive=true;
 
 
+    //constructor
     public BetCoupon() {
+        setDateCreated();
         this.bets=new ArrayList<>();
     }
 
+    //getters and setters
     public Integer getId() {
         return id;
     }
@@ -86,15 +90,28 @@ public class BetCoupon {
         this.winValue = winValue;
     }
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setDateCreated() {
+        Date date=new Date();
+        this.dateCreated = date;
     }
 
     public void setUser(User user) {
         this.user = user;
     }
 
-    public void setSuccessful(boolean isWon) {
-        this.isWon = isWon;
+    public boolean isWon() {
+        return isWon;
+    }
+
+    public void setWon(boolean won) {
+        isWon = won;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean active) {
+        isActive = active;
     }
 }

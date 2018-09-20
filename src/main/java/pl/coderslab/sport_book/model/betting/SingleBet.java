@@ -33,6 +33,12 @@ public class SingleBet {
     private BetCoupon coupon;
 
     public SingleBet() {
+        setDateCreated();
+    }
+
+    public void setDateCreated() {
+        Date date=new Date();
+        this.dateCreated = date;
     }
 
     public Long getId() {

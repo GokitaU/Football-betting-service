@@ -10,6 +10,7 @@ import java.util.List;
 public interface BetCouponRepository extends JpaRepository <BetCoupon, Integer> {
 
     List<BetCoupon> findAllByUser(String userName);
+    List<BetCoupon> findAllByUserUsername(String userName);
 
 
 }

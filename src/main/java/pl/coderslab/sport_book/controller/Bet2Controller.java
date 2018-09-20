@@ -64,16 +64,6 @@ public class Bet2Controller {
         return "coupon";
     }
 
-    @RequestMapping ("/mybets")
-    public String myBets(Model model, Authentication authentication){
-        String userName=authentication.getName();
-        List<BetCoupon> coupons=couponService.findAllByUser(userName);
-        model.addAttribute("coupons", coupons);
-        return "mybets";
-    }
-
-
-
 
     private void removeBetFromSession(@RequestParam Integer event, @ModelAttribute("sessionBets") List<SingleBet> sessionBets) {
         Iterator<SingleBet> iterator=sessionBets.listIterator();
@@ -82,6 +72,16 @@ public class Bet2Controller {
                 iterator.remove();
             }
         }
+    }
+
+    public static boolean checkIfBetsAreActive(@ModelAttribute("sessionBets") List<SingleBet> sessionBets){
+        Iterator<SingleBet> iterator=sessionBets.listIterator();
+        while (iterator.hasNext()){
+            if (iterator.next().getEvent().getBetStatus().equals("closed"))
+                return false;
+        }
+
+        return true;
     }
 
 

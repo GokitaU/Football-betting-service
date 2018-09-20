@@ -7,4 +7,6 @@ import pl.coderslab.sport_book.model.Country;
 @Repository
 public interface CountryRepository extends JpaRepository<Country, Integer> {
 
+
+
 }

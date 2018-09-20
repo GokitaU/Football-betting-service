@@ -32,4 +32,9 @@ public class BetCouponServiceImpl implements BetCouponService {
 
         return  coupons;
     }
+
+    @Override
+    public List<BetCoupon> findAllByUserUsername(String userName) {
+        return betCouponRepository.findAllByUserUsername(userName);
+    }
 }
