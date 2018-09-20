@@ -32,6 +32,11 @@
 
 
         <td>
+            <a th:href="@{/results}">Results</a>
+        </td>
+
+
+        <td>
             <p sec:authorize="isAuthenticated()">
                 <form th:action="@{/logout}" method="post">
                     <input type="submit" value="Logout"/>

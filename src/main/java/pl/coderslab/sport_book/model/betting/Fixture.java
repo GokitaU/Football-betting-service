@@ -16,8 +16,8 @@ import java.util.Date;
 @Table (name="fixtures")
 public class Fixture {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer Id;
 
     @ManyToOne

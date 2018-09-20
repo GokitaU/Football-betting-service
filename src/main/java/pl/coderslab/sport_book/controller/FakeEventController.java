@@ -24,8 +24,64 @@ public class FakeEventController {
     TeamService teamService;
 
     @RequestMapping("/generate")
-    public String generateMatchday() {
+    public String generateFakeMatchday() {
+        generateFakeMatchdaySchedule();
+        return "mock";
+    }
 
+    @RequestMapping ("/fakeresults")
+    public String generateFakeResults(){
+        generateFakeMatchdayResults();
+        return "mock";
+    }
+
+
+    private void generateFakeMatchdayResults() {
+        Fixture fixture = fixtureService.getFirstByOrderByMatchdayDesc();
+        int matchday = fixture.getMatchday();
+
+        List<Fixture> fixtures=fixtureService.findAllByMatchday(matchday);
+        for(Fixture f:fixtures){
+            Random r=new Random();
+
+            //away team scores
+            f.setHTAG(r.nextInt(5));
+            f.setFTAG(f.getHTAG()+r.nextInt(+5));
+
+            //home team scores
+            f.setHTHG(r.nextInt(5));
+            f.setFTHG(f.getHTHG()+r.nextInt(+5));
+
+            //halt time result
+            if(f.getHTHG()>f.getHTAG()){
+                f.setHTR('H');
+            }
+            else if (f.getHTHG()<f.getHTAG()){
+                f.setHTR('A');
+            }
+            else {
+                f.setHTR('D');
+            }
+
+            //final time result
+            if(f.getFTHG()>f.getFTAG()){
+                f.setFTR("H");
+            }
+            else if (f.getFTHG()<f.getFTAG()){
+                f.setFTR("A");
+            }
+            else {
+                f.setFTR("D");
+            }
+            f.setBetStatus("closed");
+
+            fixtureService.save(f);
+
+        }
+    }
+
+
+    private  void generateFakeMatchdaySchedule() {
         Fixture f = fixtureService.getFirstByOrderByMatchdayDesc();
         int matchday = f.getMatchday() + 1;
         Country country = f.getCountry();
@@ -79,13 +135,9 @@ public class FakeEventController {
             fixtures.add(event);
         }
 
-
         for (Fixture fix : fixtures) {
-            fixtureService.save(f);
+            fixtureService.save(fix);
         }
-
-        return "mock";
     }
-
 
 }

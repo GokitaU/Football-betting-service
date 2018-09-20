@@ -61,7 +61,8 @@ public class Bet2Controller {
 
         removeBetFromSession(event, sessionBets);
 
-        return "coupon";
+//        return "coupon";
+        return "redirect:/home";
     }
 
 
