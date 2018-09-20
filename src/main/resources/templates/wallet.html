@@ -12,6 +12,14 @@
 <p>Logged as <span sec:authentication="name"/></p>
 </p>
 
+<table>
+    <tr>
+        <td>
+            <a th:href="@{/home}">Home</a>
+        </td>
+</table>
+
+
 <ul>
     <li th:text="|Currently in you wallet is: ${wallet.balance} PLN|"/>
     <li th:text="|Your wallet is linked to bank account: ${wallet.bankAccount}|"/>

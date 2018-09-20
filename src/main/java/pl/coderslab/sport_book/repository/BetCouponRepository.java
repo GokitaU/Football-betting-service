@@ -11,6 +11,7 @@ public interface BetCouponRepository extends JpaRepository <BetCoupon, Integer> 
 
     List<BetCoupon> findAllByUser(String userName);
     List<BetCoupon> findAllByUserUsername(String userName);
+    BetCoupon findById(int id);
 
 
 }

@@ -16,7 +16,7 @@ public class Wallet {
     @Min(value = 0)
     private BigDecimal balance;
 
-    @OneToOne (cascade = CascadeType.PERSIST)
+    @OneToOne
     private User owner;
 
     @NotNull

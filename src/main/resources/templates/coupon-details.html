@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+<table>
+    <tr>
+        <td>
+            <a th:href="@{/home}">Home</a>
+        </td>
+</table>
+
+
+<div th:each="bet: ${bets}">
+
+<table>
+
+
+    <tr>
+        <td>Category: </td>
+        <td>Country:</td>
+        <td>League:</td>
+        <td>Teams:</td>
+        <td>Matchday:</td>
+        <td>Half Time Result:</td>
+        <td>Final Time Result:</td>
+        <td>Winning combination:</td>
+        <td>Bet status:</td>
+
+    </tr>
+
+    <tr>
+        <td th:text="${bet.event.category.categoryName}"></td>
+        <td th:text="${bet.event.country.countryName}"></td>
+        <td th:text="${c.bets.event.league.name}"></td>
+        <td th:text="|${c.bets.eventhomeTeam.name} v ${c.bets.event.awayTeam.name}|" ></td>
+        <td th:text="|Nr: ${c.bets.event.matchday} played on: ${c.bets.event.Date}|"></td>
+        <td th:text="|${c.bets.event.HTHG} : ${c.bets.event.HTAG}|"></td>
+        <td th:text="|${c.bets.event.FTHG} : ${c.bets.event.FTAG}|"></td>
+
+
+        <td th:if="${c.bets.FTR.startsWith('H')}" th:text="' 1, 1X, 12'"></td>
+        <td th:if="${c.bets.FTR.startsWith('D')}" th:text="' 1X, X, X2'"></td>
+        <td th:if="${c.bets.FTR.startsWith('A')}" th:text="' 2, X2, 12'"></td>
+        <td th:text="${c.bets.betStatus}"></td>
+
+    </tr>
+
+<!--</table>-->
+
+    <!--<table>-->
+        <!--<tr>-->
+
+            <!--<td>Created on::</td>-->
+            <!--<td>bet price:</td>-->
+            <!--<td>Win value:</td>-->
+
+        <!--</tr>-->
+
+        <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td th:text="${c.dateCreated}"></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td th:text="${c.betValue}"></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td th:text="${c.winValue}"></td>&ndash;&gt;-->
+        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+
+
+    <!--</table>-->
+    <!---->
+</div>
+
+
+</body>
+</html>

@@ -6,10 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import pl.coderslab.sport_book.model.betting.BetCoupon;
+import pl.coderslab.sport_book.model.betting.Fixture;
 import pl.coderslab.sport_book.model.betting.SingleBet;
 import pl.coderslab.sport_book.service.BetCouponService;
+import pl.coderslab.sport_book.service.FixtureService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -20,6 +23,9 @@ public class CouponController {
 
     @Autowired
     BetCouponService couponService;
+
+    @Autowired
+    FixtureService fixtureService;
 
     protected List<SingleBet> sessionBets;
 
@@ -41,9 +47,12 @@ public class CouponController {
 
 
     @RequestMapping("/coupondetails")
-    public  String showCouponDetails(){
+    public  String showCouponDetails(@RequestParam Integer id, Model model){
+        BetCoupon coupon=couponService.findById(id);
+        model.addAttribute("bets", coupon.getBets());
 
-        return "mock";
+        return "coupon-details";
+        //return "fixture-details"; returns details about singl match
     }
 
 

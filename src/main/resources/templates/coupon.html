@@ -2,6 +2,14 @@
 <html lang="en" lang="en" xmlns:th="http://www.thymeleaf.org"
 >
 
+<table>
+    <tr>
+        <td>
+            <a th:href="@{/home}">Home</a>
+        </td>
+</table>
+
+
 <div th:fragment="coupon">
 
     <div th:if="${sessionBets.isEmpty()}"> No bets are placed so far</div>

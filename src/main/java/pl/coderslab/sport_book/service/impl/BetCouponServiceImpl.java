@@ -37,4 +37,9 @@ public class BetCouponServiceImpl implements BetCouponService {
     public List<BetCoupon> findAllByUserUsername(String userName) {
         return betCouponRepository.findAllByUserUsername(userName);
     }
+
+    @Override
+    public BetCoupon findById(int id) {
+        return betCouponRepository.findById(id);
+    }
 }

@@ -10,6 +10,7 @@ import pl.coderslab.sport_book.model.User;
 import pl.coderslab.sport_book.model.Wallet;
 import pl.coderslab.sport_book.model.betting.BetCoupon;
 import pl.coderslab.sport_book.model.betting.SingleBet;
+import pl.coderslab.sport_book.repository.SingleBetRepository;
 import pl.coderslab.sport_book.service.BetCouponService;
 import pl.coderslab.sport_book.service.UserService;
 import pl.coderslab.sport_book.service.WalletService;
@@ -32,6 +33,9 @@ public class WalletControler {
 
     @Autowired
     BetCouponService couponService;
+
+    @Autowired
+    SingleBetRepository singleBetRepository;
 
     @ModelAttribute("wallet")
     public Wallet walletInSession(Authentication authentication){
@@ -83,12 +87,22 @@ public class WalletControler {
         User current=userService.getByUsername(authentication.getName());
         BetCoupon coupon = new BetCoupon();
         coupon.setBetValue(charge);
-
         coupon.setUser(current);
-        coupon.setBets(sessionBets);
-        coupon.setWinValue(calculateWinValue(sessionBets, charge));
+
         couponService.save(coupon);
-        session.removeAttribute("sessionBets");
+
+        List<SingleBet> bets = new ArrayList<>();
+        for (SingleBet bet : sessionBets) {
+            bet.setCoupon(coupon);
+            singleBetRepository.save(bet);
+            bets.add(bet);
+        }
+        BigDecimal winValue=calculateWinValue(bets,charge);
+        coupon.setWinValue(winValue);
+        coupon.setBets(bets);
+        couponService.save(coupon);
+
+        session.setAttribute("sessionBets", new ArrayList<>());
     }
 
 

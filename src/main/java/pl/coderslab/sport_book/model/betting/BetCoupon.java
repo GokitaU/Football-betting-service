@@ -16,7 +16,7 @@ public class BetCoupon {
     private Integer id;
 
     @NotNull
-    @OneToMany (mappedBy = "coupon", cascade = CascadeType.PERSIST)
+    @OneToMany (mappedBy = "coupon")
     private List<SingleBet> bets;
 
     public void addBet(SingleBet bet){

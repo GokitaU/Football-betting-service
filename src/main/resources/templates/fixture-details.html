@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<table>
+    <tr>
+        <td>
+            <a th:href="@{/home}">Home</a>
+        </td>
+</table>
+
+
+<table>
+
+    <tr>
+        <td>Category: </td>
+        <td th:text="${event.category.categoryName}"></td>
+    </tr>
+
+    <tr>
+        <td>Country:</td>
+        <td th:text="${event.country.countryName}"></td>
+    </tr>
+
+    <tr>
+        <td>League:</td>
+        <td th:text="${event.league.name}"></td>
+    </tr>
+
+    <tr>
+        <td>Teams:</td>
+        <td th:text="|${event.homeTeam.name} v ${event.awayTeam.name}|" ></td>
+    </tr>
+
+    <tr>
+        <td>Matchday:</td>
+        <td th:text="|Nr: ${event.matchday} played on: ${event.Date}|"></td>
+    </tr>
+
+
+    <tr>
+        <td>Half Time Result:</td>
+        <td th:text="|${event.HTHG} : ${event.HTAG}|"></td>
+    </tr>
+
+    <tr>
+        <td>Final Time Result:</td>
+        <td th:text="|${event.FTHG} : ${event.FTAG}|"></td>
+    </tr>
+
+    <tr>
+        <td>Winning combination:</td>
+        <td th:if="${event.FTR.startsWith('H')}" th:text="' 1, 1X, 12'"></td>
+        <td th:if="${event.FTR.startsWith('D')}" th:text="' 1X, X, X2'"></td>
+        <td th:if="${event.FTR.startsWith('A')}" th:text="' 2, X2, 12'"></td>
+
+    </tr>
+
+    <tr>
+        <td>Bet status:</td>
+        <td th:text="${event.betStatus}"></td>
+    </tr>
+
+
+
+
+
+</table>
+
+</body>
+</html>

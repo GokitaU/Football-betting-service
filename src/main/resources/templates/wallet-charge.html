@@ -8,6 +8,17 @@
 
 <h2>Bank service: </h2>
 
+<table>
+    <tr>
+        <td>
+            <a th:href="@{/home}">Home</a>
+        </td>
+
+    </tr>
+
+</table>
+
+
 <form th:action="@{/chargeaccount}" method="post">
     <p>How much money you want to add <input type="number" name="charge"></p>
     <p><input type="submit" value="Submit" /></p>

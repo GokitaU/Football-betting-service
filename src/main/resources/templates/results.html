@@ -7,6 +7,14 @@
 <body>
 
 <table>
+    <tr>
+        <td>
+            <a th:href="@{/home}">Home</a>
+        </td>
+</table>
+
+
+<table>
     <tr th:each="game: ${finishedGames}">
         <td th:text="${game.category.categoryName}"> </td>
         <td th:text="${game.league.name}"> </td>
