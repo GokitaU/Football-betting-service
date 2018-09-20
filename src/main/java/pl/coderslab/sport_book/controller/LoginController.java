@@ -15,11 +15,11 @@ public class LoginController {
     @Autowired
     UserDetailsService userDetailsService;
 
-//    @RequestMapping(value = "/login", method = RequestMethod.GET)
-//    public String loginRequest(Model model) {
-//        return "login";
-//    }
-//
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginRequest(Model model) {
+        return "login";
+    }
+
 //    @RequestMapping(value = "/login", method = RequestMethod.POST)
 //    public String loginValidation(Model model, @RequestParam String username) {
 //        User loggedUser= (User) userDetailsService.loadUserByUsername(username);

@@ -46,11 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/register").permitAll()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/home").fullyAuthenticated()
 //                .antMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().fullyAuthenticated()
-            .and().formLogin().defaultSuccessUrl("/home");
-//            .loginPage("/login");
+            .and().formLogin().defaultSuccessUrl("/home")
+            .loginPage("/login");
     }
 }
 

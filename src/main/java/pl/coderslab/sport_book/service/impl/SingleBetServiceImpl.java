@@ -10,6 +10,7 @@ import pl.coderslab.sport_book.service.FixtureService;
 import pl.coderslab.sport_book.service.SingleBetService;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class SingleBetServiceImpl implements SingleBetService {
@@ -25,6 +26,11 @@ public class SingleBetServiceImpl implements SingleBetService {
     @Override
     public SingleBet findById(Integer betId) {
         return singleBetRepository.findById(betId);
+    }
+
+    @Override
+    public List<SingleBet> findAllByCouponId(int id) {
+        return singleBetRepository.findAllByCouponId(id);
     }
 
     public static SingleBet getSingleBet(@RequestParam Integer event, @RequestParam BigDecimal betPrice, @RequestParam String placedBet, FixtureService fixtureService) {

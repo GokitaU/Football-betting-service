@@ -61,7 +61,7 @@ public class SingleBet {
         this.coupon = coupon;
     }
 
-    public boolean isWon() {
+    public boolean getWon() {
         return won;
     }
 

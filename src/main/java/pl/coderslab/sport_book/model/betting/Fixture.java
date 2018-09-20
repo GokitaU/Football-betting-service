@@ -17,6 +17,7 @@ import java.util.Date;
 public class Fixture {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    
     private Integer Id;
 
     @ManyToOne
@@ -172,5 +173,85 @@ public class Fixture {
 
     public Integer totalScore(){
         return getFTAG()+getFTHG();
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public void setCategory(SportCategory category) {
+        this.category = category;
+    }
+
+    public void setLeague(FootballLeague league) {
+        this.league = league;
+    }
+
+    public void setMatchday(Integer matchday) {
+        this.matchday = matchday;
+    }
+
+    public void setDate(java.util.Date date) {
+        Date = date;
+    }
+
+    public void setBetStatus(String betStatus) {
+        this.betStatus = betStatus;
+    }
+
+    public void setHomeTeam(Team homeTeam) {
+        this.homeTeam = homeTeam;
+    }
+
+    public void setAwayTeam(Team awayTeam) {
+        this.awayTeam = awayTeam;
+    }
+
+    public void setFTHG(Integer FTHG) {
+        this.FTHG = FTHG;
+    }
+
+    public void setFTAG(Integer FTAG) {
+        this.FTAG = FTAG;
+    }
+
+    public void setFTR(String FTR) {
+        this.FTR = FTR;
+    }
+
+    public void setHTHG(Integer HTHG) {
+        this.HTHG = HTHG;
+    }
+
+    public void setHTAG(Integer HTAG) {
+        this.HTAG = HTAG;
+    }
+
+    public void setHTR(char HTR) {
+        this.HTR = HTR;
+    }
+
+    public void setReferee(String referee) {
+        Referee = referee;
+    }
+
+    public void setBetHome(BigDecimal betHome) {
+        this.betHome = betHome;
+    }
+
+    public void setBetDraw(BigDecimal betDraw) {
+        this.betDraw = betDraw;
+    }
+
+    public void setBetAway(BigDecimal betAway) {
+        this.betAway = betAway;
+    }
+
+    public void setGoalsLessThan25(BigDecimal goalsLessThan25) {
+        GoalsLessThan25 = goalsLessThan25;
+    }
+
+    public void setGoalsMoreThan25(BigDecimal goalsMoreThan25) {
+        GoalsMoreThan25 = goalsMoreThan25;
     }
 }

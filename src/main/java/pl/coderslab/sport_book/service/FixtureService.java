@@ -21,4 +21,8 @@ public interface FixtureService {
 
     Fixture findById(int fixId);
 
+    Fixture getFirstByOrderByMatchdayDesc();
+
+    Fixture save(Fixture fixture);
+
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import pl.coderslab.sport_book.model.betting.BetCoupon;
 import pl.coderslab.sport_book.model.betting.Fixture;
 import pl.coderslab.sport_book.model.betting.SingleBet;
+import pl.coderslab.sport_book.repository.SingleBetRepository;
 import pl.coderslab.sport_book.service.BetCouponService;
 import pl.coderslab.sport_book.service.FixtureService;
 
@@ -26,6 +27,9 @@ public class CouponController {
 
     @Autowired
     FixtureService fixtureService;
+
+    @Autowired
+    SingleBetRepository singleBetRepository;
 
     protected List<SingleBet> sessionBets;
 
@@ -48,11 +52,13 @@ public class CouponController {
 
     @RequestMapping("/coupondetails")
     public  String showCouponDetails(@RequestParam Integer id, Model model){
-        BetCoupon coupon=couponService.findById(id);
-        model.addAttribute("bets", coupon.getBets());
+
+        List<SingleBet> bets=singleBetRepository.findAllByCouponId(id);
+
+        model.addAttribute("bets", bets);
 
         return "coupon-details";
-        //return "fixture-details"; returns details about singl match
+
     }
 
 

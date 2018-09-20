@@ -15,6 +15,7 @@ import pl.coderslab.sport_book.service.BetCouponService;
 import pl.coderslab.sport_book.service.UserService;
 import pl.coderslab.sport_book.service.WalletService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -70,14 +71,18 @@ public class WalletControler {
                                @ModelAttribute("sessionBets") List<SingleBet> sessionBets,
                                @RequestParam BigDecimal charge,
                                Authentication authentication,
-                               HttpSession session){
+                               HttpServletRequest request,
+                               Model model){
 
       if( wallet.getBalance().compareTo(charge) < 0){
           return "moneyalert";
       }
       else {
           wallet.setBalance(wallet.getBalance().subtract(charge));
+          HttpSession session = request.getSession();
           saveCoupon(sessionBets, charge, authentication, session);
+          model.addAttribute("sessionBets", new ArrayList<>());
+
           return "mock";
       }
 
@@ -102,7 +107,6 @@ public class WalletControler {
         coupon.setBets(bets);
         couponService.save(coupon);
 
-        session.setAttribute("sessionBets", new ArrayList<>());
     }
 
 

@@ -17,4 +17,11 @@ public interface FixtureRepository extends JpaRepository<Fixture, Integer> {
     List<Fixture> findAllByMatchday(int matchday);
 
     List<Fixture> findAllByBetStatus(String status);
+
+    Fixture getFirstByOrderByMatchdayDesc();
+
+    Fixture save(Fixture fixture);
+
+
+
 }

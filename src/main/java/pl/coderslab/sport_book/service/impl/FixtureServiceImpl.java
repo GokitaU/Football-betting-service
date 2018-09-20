@@ -56,4 +56,15 @@ public class FixtureServiceImpl implements FixtureService {
         return fixtureRepository.findOne(fixId);
     }
 
+    @Override
+    public Fixture getFirstByOrderByMatchdayDesc() {
+        return fixtureRepository.getFirstByOrderByMatchdayDesc();
+    }
+
+    @Override
+    public Fixture save(Fixture fixture) {
+        return fixtureRepository.save(fixture);
+    }
+
+
 }
