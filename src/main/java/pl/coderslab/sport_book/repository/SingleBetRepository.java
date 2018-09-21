@@ -10,6 +10,10 @@ public interface SingleBetRepository extends JpaRepository <SingleBet, Integer> 
 
     SingleBet findById(Integer betId);
     List<SingleBet> findAllByCouponId(int id);
+    List<SingleBet> findAllBy(int id);
+    List<SingleBet> findAllByEventMatchday(int id);
+
+
 
 
 }

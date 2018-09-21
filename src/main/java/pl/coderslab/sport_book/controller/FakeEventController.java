@@ -8,7 +8,9 @@ import pl.coderslab.sport_book.model.FootballLeague;
 import pl.coderslab.sport_book.model.SportCategory;
 import pl.coderslab.sport_book.model.Team;
 import pl.coderslab.sport_book.model.betting.Fixture;
+import pl.coderslab.sport_book.model.betting.SingleBet;
 import pl.coderslab.sport_book.service.FixtureService;
+import pl.coderslab.sport_book.service.SingleBetService;
 import pl.coderslab.sport_book.service.TeamService;
 
 import java.math.BigDecimal;
@@ -23,6 +25,9 @@ public class FakeEventController {
     @Autowired
     TeamService teamService;
 
+    @Autowired
+    SingleBetService singleBetService;
+
     @RequestMapping("/generate")
     public String generateFakeMatchday() {
         generateFakeMatchdaySchedule();
@@ -32,7 +37,42 @@ public class FakeEventController {
     @RequestMapping ("/fakeresults")
     public String generateFakeResults(){
         generateFakeMatchdayResults();
+        updateSingleBets();
+//        checkCoupons();
+
         return "mock";
+    }
+
+
+
+
+    private void updateSingleBets() {
+        Fixture fixture = fixtureService.getFirstByOrderByMatchdayDesc();
+        int matchday = fixture.getMatchday();
+        List<SingleBet> bets=singleBetService.findAllByEventMatchday(matchday);
+        for(SingleBet b:bets){
+            //get users guess
+            String userFTR=b.getPlacedBet();
+
+            //get event FTR
+            String FTR=b.getEvent().getFTR();
+            String goalsFTR=null;
+
+            if(b.getEvent().getFTHG()+b.getEvent().getFTAG()<2.5 ){
+                goalsFTR="LT2_5";
+            } else {
+                goalsFTR = "GT2_5";
+            }
+
+            //validation if user guess and resuls are the same
+
+            if (userFTR.equals(FTR) || userFTR.equals(goalsFTR)){
+                b.setWon(true);
+                singleBetService.save(b);
+            }
+
+        }
+
     }
 
 
@@ -74,6 +114,7 @@ public class FakeEventController {
                 f.setFTR("D");
             }
             f.setBetStatus("closed");
+
 
             fixtureService.save(f);
 

@@ -12,4 +12,5 @@ public interface SingleBetService {
     SingleBet findById(Integer betId);
 
     List<SingleBet> findAllByCouponId(int id);
+    List<SingleBet> findAllByEventMatchday(int id);
 }

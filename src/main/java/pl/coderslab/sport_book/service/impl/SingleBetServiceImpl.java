@@ -33,6 +33,11 @@ public class SingleBetServiceImpl implements SingleBetService {
         return singleBetRepository.findAllByCouponId(id);
     }
 
+    @Override
+    public List<SingleBet> findAllByEventMatchday(int id) {
+        return singleBetRepository.findAllByEventMatchday(id);
+    }
+
     public static SingleBet getSingleBet(@RequestParam Integer event, @RequestParam BigDecimal betPrice, @RequestParam String placedBet, FixtureService fixtureService) {
         SingleBet bet=new SingleBet();
         Fixture fixture=fixtureService.findById(event);
